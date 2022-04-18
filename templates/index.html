@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello Richard</h1>
+    <form method='POST' id="postForm">
+        <input type="text" id="userInput", name="name">
+        <input type="submit">
+    </form>
+    <!-- This will be filled with prediction through JavaScript -->
+    <div id="predictions"></div>    
+    
+    <script>
+        // With the help of Ajax we are going to submit the form to the output
+        // url that we created in flask app
+        // When the form is submitted then the function getData (2nd argument) 
+        // is called
+        document.getElementById('postForm').addEventListener('submit', getData)
+
+        function getData(e){
+            // As default when submitting it would redirect to other page
+            e.preventDefault();
+
+            let name = document.getElementById('userInput').value;
+            let params = {user_input:name}
+            
+            console.log(`Name: ${name}`)
+
+            // Instantiate object
+            let xhr = new XMLHttpRequest();
+            
+            xhr.open('post', '../output', true);
+            
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            // When everything is done correctly, what are we going to do
+            xhr.onload = function() {
+                console.log('Reached');
+                // Once we get response from the HTTP request we will fill in
+                // text to this element <div id="predictions"></div>
+                // with the prediction from the model
+                document.getElementById('predictions').innerHTML = this.responseText;
+            }
+
+            xhr.send(JSON.stringify(params));
+        }
+    </script>
+</body>
+</html>
