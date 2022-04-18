@@ -1,7 +1,7 @@
 """
-This code shows a typical way in Flask of submiting POST request 
-via a form element on frontend(client) that renders a new page
-in this case output.html
+This code shows a async way in Flask of submiting POST request 
+via a form element on frontend(client) that dynamically renders new content 
+on the same page index.html
 """
 from flask import Flask, jsonify, redirect, render_template, request, url_for, redirect
 import pandas as pd
